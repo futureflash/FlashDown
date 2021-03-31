@@ -136,7 +136,7 @@ namespace FlashDown
 
         private void RemoteShutdownForm_Load(object sender, EventArgs e) // Will run some code when the form loads. Even though the application starts in the system tray, the form still loads, it's just hidden from the user
         {
-            AutoUpdater.Start("https://github.com/future-flash/FlashDown/FlashDownUpdate.xml"); // This is the file the program reads from my GitHub repo to see if there's an update or not
+            AutoUpdater.Start("https://raw.githubusercontent.com/future-flash/FlashDown/main/FlashDownUpdate.xml"); // This is the file the program reads from my GitHub repo to see if there's an update or not
             AutoUpdater.Mandatory = true; // This line of code makes it where the user can't ignore the update prompt, hence why it's mandatory
 
             if (FlashDownVariables.IsConnectedToInternet == false) // Gives an error if the user is not connected to the internet
