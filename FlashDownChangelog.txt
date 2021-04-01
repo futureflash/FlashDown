@@ -1,5 +1,6 @@
 
-v1.1 (Latest Version):
+v1.1 (Latest Version | Released on 4/1/2021)
+
 • Added a custom command feature. Keep in mind this is still in progress and may not work as expected.
 		-- Essentially, this feature allows the user to send and run any CMD command. This can be done by
 	sending any CMD command if your choice as a string while sending the packet. For example, say you
@@ -8,6 +9,7 @@ v1.1 (Latest Version):
 
 • Fixed some typos and renamed some variables
 ---------------------------------------------------------------------
-v1.0:
+v1.0 (Released on 3/31/2021):
+
 • Initial release, here we go! Let's see how this goes
 ---------------------------------------------------------------------
