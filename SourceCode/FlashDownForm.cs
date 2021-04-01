@@ -271,7 +271,7 @@ namespace FlashDown
                     Enabled = false;
                     Hide();
                     AutoUpdater.ShowUpdateForm(args);
-                    Application.Exit();
+                    Environment.Exit(0);
                 }
                 else
                 {
