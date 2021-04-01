@@ -1,4 +1,13 @@
 
-v1.0 (Latest Version):
+v1.1 (Latest Version):
+• Added a custom command feature. Keep in mind this is still in progress and may not work as expected.
+		-- Essentially, this feature allows the user to send and run any CMD command. This can be done by
+	sending any CMD command if your choice as a string while sending the packet. For example, say you
+	want to run Notepad. If you send a packet with the string 'notepad.exe' or 'notepad', the PC will
+	receieve this packet and run the desired command, in this case Notepad.exe
+
+• Fixed some typos and renamed some variables
+---------------------------------------------------------------------
+v1.0:
 • Initial release, here we go! Let's see how this goes
 ---------------------------------------------------------------------

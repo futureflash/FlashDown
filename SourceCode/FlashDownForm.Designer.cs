@@ -171,7 +171,7 @@ namespace FlashDown
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(28, 13);
             this.versionLabel.TabIndex = 8;
-            this.versionLabel.Text = "v1.0";
+            this.versionLabel.Text = "v1.1";
             this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
             // 
             // menuStrip1

@@ -74,10 +74,10 @@ namespace FlashDown
 
             public static void RestartPC() // Command to restart life. Wish we all had this one
             {
-                var shutDownCommand = new ProcessStartInfo("shutdown", "/r");
-                shutDownCommand.CreateNoWindow = true;
-                shutDownCommand.UseShellExecute = false;
-                Process.Start(shutDownCommand);
+                var restartCommand = new ProcessStartInfo("shutdown", "/r /t 0");
+                restartCommand.CreateNoWindow = true;
+                restartCommand.UseShellExecute = false;
+                Process.Start(restartCommand);
             }
 
             public static void ShowTestMessage() // Command to test if everything works properly by showing a MessageBox
@@ -91,6 +91,23 @@ namespace FlashDown
                 lockScreenCommand.CreateNoWindow = true;
                 lockScreenCommand.UseShellExecute = false;
                 Process.Start(lockScreenCommand);
+            }
+
+            public static void CMDCommand(string cmdCommandArgs) // A method that accepts CMD commands and runs them. This is still in progress and needs a lot of work
+            {
+                var cmdCommandAndArgs = new ProcessStartInfo();
+                cmdCommandAndArgs.WindowStyle = ProcessWindowStyle.Hidden;
+                cmdCommandAndArgs.FileName = "cmd.exe";
+                cmdCommandAndArgs.Arguments = "/C "+ cmdCommandArgs;
+                Process.Start(cmdCommandAndArgs);
+            }
+
+            public static void RunProcessCommand(string runProcessCommand, string processArgs) // Command to run a process that the user specifies
+            {
+                var runProcessCommandAndArgs = new ProcessStartInfo(runProcessCommand, processArgs);
+                runProcessCommandAndArgs.CreateNoWindow = true;
+                runProcessCommandAndArgs.UseShellExecute = false;
+                Process.Start(runProcessCommandAndArgs);
             }
 
             public static bool IsConnectedToInternet // Remember when I declared that boolean above? This static boolean puts it to use and returns the value
@@ -126,7 +143,7 @@ namespace FlashDown
                 Environment.Exit(0); // Because of so many different threads running, using 'Environment.Exit(0)' instead of 'Application.Exit()' results in all threads stopping and the applicaiton essentially force quitting
             }
 
-            public static void Help() // This method asks for more information about you, hence why it's called 'About'. It asks for your SSN, home address, IQ, etc. Please note that the IQ value will only be accepted if it's in the negatives. Nice try, Einstein
+            public static void Help() // This method screams for help. A dollar a day can help starvation for children. No really though, please donate to the Save the Children Organization at: https://www.savethechildren.org/
             {
                 flashDownForm.ShowInTaskbar = true;
                 flashDownForm.WindowState = FormWindowState.Normal;
@@ -158,7 +175,7 @@ namespace FlashDown
             }
         }
 
-        private void RemoteShutdownForm_FormClosing(object sender, FormClosingEventArgs e) // [SECRET] This method minimizes the application to the system tray when the user closes the form
+        private void RemoteShutdownForm_FormClosing(object sender, FormClosingEventArgs e) // This method minimizes the application to the system tray when the user closes the form
         {
             e.Cancel = true; // Notice how the method has the FormClosing event arguments. This line of code cancels it, preventing the form from closing
             Hide(); // Because I canceled the form from closing, I can now hide it. In other words, I stopped the form from closing to do what I want with it
@@ -206,6 +223,35 @@ namespace FlashDown
                     else if (finalCommand.Contains("restart")) // If a packet with the string 'restart' is receieved, the PC restarts
                     {
                         FlashDownVariables.RestartPC();
+                    }
+                    else
+                    {
+                        if (finalCommand.Contains(".exe")) // If user is trying to start a process, use different string manipulation to split command arguments
+                        {
+                            try
+                            {
+                                string splitCommand = finalCommand.Split(' ')[0];
+                                Console.WriteLine("SplitCommand: " + splitCommand);
+                                string splitArgs = finalCommand.Remove(0, splitCommand.Length);
+                                Console.WriteLine("SplitArgs: " + splitArgs);
+                                FlashDownVariables.RunProcessCommand(splitCommand, splitArgs);
+                            }
+                            catch (Exception runProcessCommandException)
+                            {
+                                Console.WriteLine(runProcessCommandException.ToString());
+                            }
+                        }
+                        else // If user is not trying to start a process, don't use string manipulation to split command arguments
+                        {
+                            try
+                            {
+                                FlashDownVariables.CMDCommand(finalCommand);
+                            }
+                            catch (Exception customCommandException)
+                            {
+                                Console.WriteLine(customCommandException.ToString());
+                            }
+                        }
                     }
                 }
                 catch (Exception flashDownUdpClientException)
@@ -274,7 +320,7 @@ namespace FlashDown
 
         private void versionLabel_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Created by FutureFlash on 3/17/2021 and released on 3/31/2021. This program is open sourced and should always be free. If you paid for this program, you got scammed.\r\n\r\nYou can view the source code at: https://github.com/future-flash/FlashDown", "FlashDown (v1.0)", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Created by FutureFlash on 3/17/2021 and released on 3/31/2021. This program is open sourced and should always be free. If you paid for this program, you got scammed.\r\n\r\nYou can view the source code at: https://github.com/future-flash/FlashDown", "FlashDown (v1.1)", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
